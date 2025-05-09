@@ -2,6 +2,9 @@ import {PrismaClient} from "@prisma/client";
 import cloudinary from "../config/cloudinary.js";
 
 const prisma = new PrismaClient()
+export function __setPrismaClient(client) {
+  prisma = client
+}
 
 export const createEventController = async (req, res) => {
     const { title, images, description, joinform } = req.body;
