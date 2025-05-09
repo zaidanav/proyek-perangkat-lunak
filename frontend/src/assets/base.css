@@ -1,0 +1,105 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+  /* Primary colors */
+  --primary-white: #FFFFFF;
+  --primary-blue: #0084C5;
+  --primary-green: #7FB32A;
+
+  /* Shades and tints of blue */
+  --blue-light: #33a0d1;
+  --blue-lighter: #66bcdd;
+  --blue-dark: #0067a3;
+  
+  /* Shades and tints of green */
+  --green-light: #95c251;
+  --green-lighter: #abd178;
+  --green-dark: #6a9623;
+
+  /* Neutral colors */
+  --neutral-100: #FFFFFF;
+  --neutral-200: #f8f8f8;
+  --neutral-300: #f2f2f2;
+  --neutral-400: #e0e0e0;
+  --neutral-500: #c0c0c0;
+  --neutral-600: #a0a0a0;
+  --neutral-700: #707070;
+  --neutral-800: #404040;
+  --neutral-900: #202020;
+
+  /* Legacy variables - remapped to our new palette */
+  --vt-c-white: var(--primary-white);
+  --vt-c-white-soft: var(--neutral-200);
+  --vt-c-white-mute: var(--neutral-300);
+  
+  --vt-c-black: var(--neutral-900);
+  --vt-c-black-soft: var(--neutral-800);
+  --vt-c-black-mute: var(--neutral-700);
+
+  --vt-c-indigo: var(--primary-blue);
+
+  --vt-c-divider-light-1: rgba(0, 132, 197, 0.29);
+  --vt-c-divider-light-2: rgba(0, 132, 197, 0.12);
+  --vt-c-divider-dark-1: var(--primary-blue);
+  --vt-c-divider-dark-2: rgba(0, 132, 197, 0.7);
+}
+/* semantic color variables for this project */
+:root {
+  --color-background: var(--primary-white);
+  --color-background-soft: var(--neutral-200);
+  --color-background-mute: var(--neutral-300);
+
+  --color-border: var(--neutral-400);
+  --color-border-hover: var(--primary-blue);
+
+  --color-heading: var(--primary-blue);
+  --color-text: var(--neutral-800);
+  --color-text-light: var(--neutral-600);
+  
+  --color-primary: var(--primary-blue);
+  --color-primary-light: var(--blue-light);
+  --color-primary-lighter: var(--blue-lighter);
+  --color-primary-dark: var(--blue-dark);
+  
+  --color-secondary: var(--primary-green);
+  --color-secondary-light: var(--green-light);
+  --color-secondary-lighter: var(--green-lighter);
+  --color-secondary-dark: var(--green-dark);
+
+  --section-gap: 160px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+

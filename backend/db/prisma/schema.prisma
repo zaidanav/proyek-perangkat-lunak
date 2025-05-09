@@ -1,0 +1,84 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model events {
+  id          Int        @id @default(autoincrement())
+  title       String     @default("Event Title") @db.VarChar(50)
+  images      String     @default("")
+  description String?    @default("Description here") @db.VarChar(200)
+  posted_at   DateTime?  @default(now()) @db.Timestamp(6)
+  joinform    String?    @default("https://example.com/join-form")
+  liked_by    liked_by[]
+}
+
+model liked_by {
+  id     Int    @id @default(autoincrement())
+  u_id   Int
+  e_id   Int
+  events events @relation(fields: [e_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users  users  @relation(fields: [u_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model trained_by {
+  trainer_id                         Int
+  member_id                          Int
+  stat1                              Int?
+  stat2                              Int?
+  stat3                              Int?
+  stat4                              Int?
+  stat5                              Int?
+  users_trained_by_member_idTousers  users @relation("trained_by_member_idTousers", fields: [member_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users_trained_by_trainer_idTousers users @relation("trained_by_trainer_idTousers", fields: [trainer_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([trainer_id, member_id])
+}
+
+model training_assignments {
+  id                                           Int       @id @default(autoincrement())
+  trainer_id                                   Int
+  member_id                                    Int
+  start_date                                   DateTime  @db.Date
+  end_date                                     DateTime? @db.Date
+  status                                       String?   @default("active") @db.VarChar(20)
+  notes                                        String?
+  created_at                                   DateTime? @default(now()) @db.Timestamp(6)
+  updated_at                                   DateTime? @default(now()) @db.Timestamp(6)
+  users_training_assignments_member_idTousers  users     @relation("training_assignments_member_idTousers", fields: [member_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users_training_assignments_trainer_idTousers users     @relation("training_assignments_trainer_idTousers", fields: [trainer_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model users {
+  id                                                          Int                    @id @default(autoincrement())
+  role                                                        user_role
+  username                                                    String                 @db.VarChar(100)
+  password                                                    String?                @db.VarChar(255)
+  email                                                       String                 @unique @db.VarChar(100)
+  provider                                                    String?                @db.VarChar(20)
+  provider_id                                                 String?                @db.VarChar(100)
+  avatar                                                      String
+  created_at                                                  DateTime?              @default(now()) @db.Timestamp(6)
+  updated_at                                                  DateTime?              @default(now()) @db.Timestamp(6)
+  name                                                        String                 @db.VarChar(100)
+  phone_no                                                    String?                @unique @db.VarChar(15)
+  last_activity                                               DateTime?              @default(now()) @db.Timestamp(6)
+  liked_by                                                    liked_by[]
+  trained_by_trained_by_member_idTousers                      trained_by[]           @relation("trained_by_member_idTousers")
+  trained_by_trained_by_trainer_idTousers                     trained_by[]           @relation("trained_by_trainer_idTousers")
+  training_assignments_training_assignments_member_idTousers  training_assignments[] @relation("training_assignments_member_idTousers")
+  training_assignments_training_assignments_trainer_idTousers training_assignments[] @relation("training_assignments_trainer_idTousers")
+}
+
+enum user_role {
+  admin
+  trainer
+  member
+}

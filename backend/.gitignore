@@ -1,0 +1,7 @@
+node_modules/
+.env
+.DS_Store
+
+backend/scripts/admin/.admin_created
+
+Dockerfile
